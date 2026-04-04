@@ -47,11 +47,11 @@ profilelekaraao("john",function(data){
 });
 let pr = new Promise(function(res,rej){
   setTimeout(() => {
-    let rn = Math.random()*10;
+    let rn = Math.floor(Math.random()*10);
     if(rn>5){
-      res("success"+rn);
+      res("success"+ rn);
     } else {
-      rej("failure"+rn);
+      rej("failure"+ rn);
     }
   }, 1000);
 });
@@ -61,3 +61,14 @@ pr.then(function(val){
 }).catch(function(val){
   console.log(val);
 });
+
+async function abcd(){
+  try{
+    let val =await pr;
+    console.log(val);
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+abcd();
