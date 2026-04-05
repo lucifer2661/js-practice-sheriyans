@@ -1,74 +1,46 @@
-//koi bhi code js mein line by line chalts hai aur ye natural pattern hota hai ki code line by line chale but kabhi
-//kabi asie cases aate hai life mai jaha par aapka code wait krta hai and utni der mein agla code 
-//chal jaata hai
+function getusers(){
+  
+fetch("https://randomuser.me/api/?results=5")
+  .then((raw) => raw.json())
+  .then((data) => {
 
-console.log("Hello World");
-setTimeout(() => {
-    console.log("This is setTimeout");
-}, 2000);
-console.log("This is the end of the code");
-//sync aisa code jo line by line chale 
-//async aisa code jo line by line na chale aur wait kare kisi event ke hone ka ya kisi condition ke fulfill hone ka
-//call back pattern and  call back hell
+    document.getElementById("container").innerHTML = ""; // Clear previous results
+    data.results.forEach(function (user) {
 
+      const card = document.createElement("div");
+      card.className =
+        "bg-white shadow-xl rounded-2xl p-6 w-80 text-center hover:scale-105 transition-transform duration-300";
 
-function kuchhderbaddchalungfa(fnc){
-  setTimeout(fnc,Math.floor(Math.random()*1000));
+      // Image
+      const img = document.createElement("img");
+      img.src = user.picture.large;
+      img.className =
+        "w-24 h-24 mx-auto rounded-full border-4 border-blue-500";
+
+      // Name
+      const name = document.createElement("h2");
+      name.className = "text-xl font-semibold mt-4";
+      name.textContent = `${user.name.first} ${user.name.last}`;
+
+      // Bio (using email as demo)
+      const bio = document.createElement("p");
+      bio.className = "text-gray-600 text-sm mt-3";
+      bio.textContent = user.email;
+
+     
+     
+
+      // Append
+    
+      card.appendChild(img);
+      card.appendChild(name);
+      card.appendChild(bio);
+
+const container = document.getElementById("container");
+container.appendChild(card);    });
+  });
 }
-kuchhderbaddchalungfa((function(){
-  console.log("1");
-})); 
-
-//ek function ko agar app ek  aur function de rahe ho parameter mein to
-//vo parameter vala function hota hai call back;
-
-function profilelekaraao(username,cb) {
-  setTimeout(() => {
-    console.log(`profile fetched of ${username}`);
-    cb({_id: "123", username, age: 26, email: "onlypain@chutiya.com"});
-  }, 
-  1000);
-}
-function saarepostlekaraao(userid,cb) {
-  console.log(`fetching posts of ${userid}`);
-  setTimeout(() => {
-    console.log(`posts fetched of ${userid}`);
-    cb({_id: userid, posts: ["hey", "hello", "hi"]});
-  }, 1000);
-}
-
-
-profilelekaraao("john",function(data){
-  console.log(data);
-  saarepostlekaraao(data._id,function(posts){
-    console.log(posts);
-  })
-
+getusers();
+document.querySelector("#mainBtn").addEventListener("click", function() {
+  getusers();
 });
-let pr = new Promise(function(res,rej){
-  setTimeout(() => {
-    let rn = Math.floor(Math.random()*10);
-    if(rn>5){
-      res("success"+ rn);
-    } else {
-      rej("failure"+ rn);
-    }
-  }, 1000);
-});
-
-pr.then(function(val){
-  console.log(val);
-}).catch(function(val){
-  console.log(val);
-});
-
-async function abcd(){
-  try{
-    let val =await pr;
-    console.log(val);
-  }
-  catch(err){
-    console.log(err);
-  }
-}
-abcd();

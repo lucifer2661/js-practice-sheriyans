@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toast App</title>
-
+  <title>User Card</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div id="container" class="flex flex-wrap gap-6 justify-center p-6"></div>
+ <button 
+    id="mainBtn"
+        class="fixed top-6 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-6 py-3 rounded-xl text-lg hover:bg-blue-600 transition">
 
-  <!-- optional button to test -->
-  <button onclick="toaster('Hello 👋')" 
-    class="px-4 py-2 bg-blue-500 text-white rounded">
-    Show Toast
+    refresh
   </button>
-
   <script src="script.js"></script>
+
 </body>
 </html>
