@@ -44,3 +44,27 @@ getusers();
 document.querySelector("#mainBtn").addEventListener("click", function() {
   getusers();
 });
+
+
+function throttle(func, delay) {
+  let timer =0;
+  return function(...args){
+    let now=Date.now;
+    if(now-timer>=delay){
+      timer=now;
+      func(...args);
+    }
+  };
+}
+
+function debounce(func, delay) {
+  let timer=0;  
+  return function(...args){
+    clearTimeout(timer);
+    timer=setTimeout(() => func(...args), delay);
+  };
+}
+
+InputDeviceInfo.addEventListener("input", throttle(function() {
+  console.log("run");
+},1000));
