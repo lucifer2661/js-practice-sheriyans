@@ -1,21 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Card</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<title>Lazy Loading Fix</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+}
+
+.spacer {
+    height: 800px;
+}
+
+.img {
+    width: 300px;
+    height: 200px;
+    margin: 50px auto;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.img.loaded {
+    opacity: 1;
+}
+</style>
+
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body>
 
-    <div id="container" class="flex flex-wrap gap-6 justify-center p-6"></div>
- <button 
-    id="mainBtn"
-        class="fixed top-6 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-6 py-3 rounded-xl text-lg hover:bg-blue-600 transition">
+<h1>Scroll Down 👇</h1>
 
-    refresh
-  </button>
-  <script src="script.js"></script>
+<div class="spacer"></div>
+
+<img class="img"
+     src="https://via.placeholder.com/300x200?text=Loading"
+     data-src="https://picsum.photos/id/1015/300/200">
+
+<img class="img"
+     src="https://via.placeholder.com/300x200?text=Loading"
+     data-src="https://picsum.photos/id/1016/300/200">
+
+<img class="img"
+     src="https://via.placeholder.com/300x200?text=Loading"
+     data-src="https://picsum.photos/id/1018/300/200">
+
+<div class="spacer"></div>
+
+<script>
+let imgs = document.querySelectorAll('.img');
+
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+
+            console.log("Loading image..."); // DEBUG
+
+            img.src = img.dataset.src;
+            img.classList.add('loaded');
+
+            observer.unobserve(img);
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+imgs.forEach(img => observer.observe(img));
+</script>
 
 </body>
 </html>

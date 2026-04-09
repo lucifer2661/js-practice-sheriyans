@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.img {
+    width: 300px;
+    height: 200px;
+    margin: auto;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+/* When loaded */
+.img.loaded {
+    opacity: 1;
+}

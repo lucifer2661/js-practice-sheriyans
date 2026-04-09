@@ -1,70 +1,22 @@
-function getusers(){
-  
-fetch("https://randomuser.me/api/?results=5")
-  .then((raw) => raw.json())
-  .then((data) => {
+let imgs = document.querySelectorAll('.img');
 
-    document.getElementById("container").innerHTML = ""; // Clear previous results
-    data.results.forEach(function (user) {
+const observer = new IntersectionObserver(function(entries, observer) {
+    entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+            const img = entry.target;
 
-      const card = document.createElement("div");
-      card.className =
-        "bg-white shadow-xl rounded-2xl p-6 w-80 text-center hover:scale-105 transition-transform duration-300";
+            img.src = img.dataset.src;
+            img.classList.add('loaded');
 
-      // Image
-      const img = document.createElement("img");
-      img.src = user.picture.large;
-      img.className =
-        "w-24 h-24 mx-auto rounded-full border-4 border-blue-500";
-
-      // Name
-      const name = document.createElement("h2");
-      name.className = "text-xl font-semibold mt-4";
-      name.textContent = `${user.name.first} ${user.name.last}`;
-
-      // Bio (using email as demo)
-      const bio = document.createElement("p");
-      bio.className = "text-gray-600 text-sm mt-3";
-      bio.textContent = user.email;
-
-     
-     
-
-      // Append
-    
-      card.appendChild(img);
-      card.appendChild(name);
-      card.appendChild(bio);
-
-const container = document.getElementById("container");
-container.appendChild(card);    });
-  });
-}
-getusers();
-document.querySelector("#mainBtn").addEventListener("click", function() {
-  getusers();
+            observer.unobserve(img);
+        }
+    });
+}, {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
 });
 
-
-function throttle(func, delay) {
-  let timer =0;
-  return function(...args){
-    let now=Date.now;
-    if(now-timer>=delay){
-      timer=now;
-      func(...args);
-    }
-  };
-}
-
-function debounce(func, delay) {
-  let timer=0;  
-  return function(...args){
-    clearTimeout(timer);
-    timer=setTimeout(() => func(...args), delay);
-  };
-}
-
-InputDeviceInfo.addEventListener("input", throttle(function() {
-  console.log("run");
-},1000));
+imgs.forEach(function(img) {
+    observer.observe(img);
+});
